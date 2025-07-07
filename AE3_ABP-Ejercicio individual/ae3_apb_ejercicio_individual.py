@@ -1,42 +1,55 @@
-def calculate_discount(product_qty, times_bought_before, total_sum, sale_day):
+def calculate_discount(qty, times_bought, purchase_total, is_sale_day):
+    """
+    Calcula el porcentaje de descuento a aplicar según la cantidad de productos,
+    compras previas, monto total y si es día de promoción especial.
+
+    Parámetros:
+        qty (int): Cantidad de productos comprados.
+        times_bought (int): Número de compras previas del cliente.
+        purchase_total (float): Monto total de la compra.
+        is_sale_day (bool): True si es día de promoción especial, False en caso contrario.
+
+    Retorna:
+        int: Porcentaje total de descuento aplicado (máximo 30%).
+    """
     discount = 0  # Inicializa el descuento en 0
 
     # Si se compran más de 10 productos
-    if product_qty > 10:
+    if qty > 10:
         discount += 10
         # Si además es cliente frecuente
         if times_bought_before > 5:
             discount += 5
             # Si además el total supera $500
-            if total_sum > 500:
+            if purchase_total > 500:
                 discount += 7
                 # Si además es día de promoción especial
-                if sale_day:
+                if is_sale_day:
                     discount += 15
-            elif sale_day:
+            elif is_sale_day:
                 discount += 15
-        elif total_sum > 500:
+        elif purchase_total > 500:
             discount += 7
-            if sale_day:
+            if is_sale_day:
                 discount += 15
-        elif sale_day:
+        elif is_sale_day:
             discount += 15
     # Si no compró más de 10 productos, pero es cliente frecuente
-    elif times_bought_before > 5:
+    elif times_bought > 5:
         discount += 5
-        if total_sum > 500:
+        if purchase_total > 500:
             discount += 7
-            if sale_day:
+            if is_sale_day:
                 discount += 15
-        elif sale_day:
+        elif is_sale_day:
             discount += 15
     # Si no es cliente frecuente ni compró más de 10 productos, pero el total supera $500
-    elif total_sum > 500:
+    elif purchase_total > 500:
         discount += 7
-        if sale_day:
+        if is_sale_day:
             discount += 15
     # Solo día de promoción especial
-    elif sale_day:
+    elif is_sale_day:
         discount += 15
 
     # Limita el descuento máximo al 30%
@@ -72,17 +85,18 @@ if __name__ == "__main__":
             product_qty += 1  # Suma uno al contador de productos
             total_sum += price  # Suma el precio al total acumulado
             # Calcula el descuento actual según los criterios
-            discount = calculate_discount(product_qty, times_bought_before, total_sum, sale_day)
-            discount_dollars = total_sum * (discount / 100)  # Calcula el descuento en dólares
+            current_discount = calculate_discount(product_qty, times_bought_before, total_sum, sale_day)
+            discount_dollars = total_sum * (current_discount / 100)  # Calcula el descuento en dólares
             print(f"Total acumulado: ${total_sum:.2f}")
-            print(f"Descuento acumulado: {discount}% (${discount_dollars:.2f})\n")
+            print(f"Descuento acumulado: {current_discount}% (${discount_dollars:.2f})\n")
         except ValueError:
             print("Por favor, ingrese un número válido o 0 para terminar.")
 
     # Muestra el resumen final de la compra
+    final_discount = calculate_discount(product_qty, times_bought_before, total_sum, sale_day)
     print(f"\nTotal final: ${total_sum:.2f}")
-    print(f"Descuento final aplicado: {discount}% (${total_sum * (discount / 100):.2f})")
-    print(f"Total a pagar: ${total_sum - (total_sum * (discount / 100)):.2f}")
+    print(f"Descuento final aplicado: {final_discount}% (${total_sum * (final_discount / 100):.2f})")
+    print(f"Total a pagar: ${total_sum - (total_sum * (final_discount / 100)):.2f}")
 
 # Notas sobre condiciones de borde:
 # - Si el usuario ingresa exactamente 10 productos, NO recibe el 10% de descuento (debe ser más de 10).
