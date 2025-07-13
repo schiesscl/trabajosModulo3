@@ -1,3 +1,7 @@
+"""
+Este script realiza una serie de ejercicios básicos con bucles for.
+"""
+
 #Hans Schiess
 
 # 1. Básico
@@ -28,11 +32,11 @@ for i in range(2024, 1, -3):
 # 6. Contador dinámico
 print("\n6. Contador dinámico")
 # Variables personalizables
-numInicial = 3
-numFinal = 10
-multiplo = 2
+NUM_INICIAL = 3
+NUM_FINAL = 10
+MULTIPLO = 2
 
 # Bucle para recorrer desde numInicial hasta numFinal
-for i in range(numInicial, numFinal + 1):
-    if i % multiplo == 0:
+for i in range(NUM_INICIAL, NUM_FINAL + 1):
+    if i % MULTIPLO == 0:
         print(i)
