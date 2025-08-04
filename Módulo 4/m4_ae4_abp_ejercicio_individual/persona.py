@@ -1,7 +1,7 @@
 from tamagotchi import Tamagotchi
 
 class Persona:
-    def __init__ (self, nombre, apellido, tamagotchi):
+    def __init__ (self, nombre: str, apellido: str, tamagotchi: Tamagotchi):
         self.nombre = nombre
         self.apellido = apellido
         self.tamagotchi = tamagotchi
